@@ -15,7 +15,6 @@ void left_update_array(int[][4], int*, int*, int*);
 int check_sort(int[][4]);
 void display(int[][4], int*, int*);
 
-
 //  Function for Only Colors.......................
 void red() {
     printf("\033[1;31;1m");
@@ -105,7 +104,6 @@ void welcomeText(char userName[]) {
 }
 
 
-
 //  main function
 int main() {
     char direction;
@@ -128,7 +126,7 @@ int main() {
 
         //  Code to get Uer's Name
         printf("Enter Player Name: \n");
-        fflush(stdin);
+        fflush(stdin); 
         fgets(userName, 20, stdin);
         userName[strlen(userName) - 1] = '\0';
         system("cls");
@@ -160,7 +158,6 @@ int main() {
         while (remaining_moves > 0) {
             direction = getch();
             switch (direction)
-
             {
             case 72:
                 system("cls");
@@ -284,7 +281,7 @@ int random_array(int array[][4], int temp[]) {
     int t, j;
 
     srand(time(NULL));
-    for (i = 0;i < 16;i++)     //assigning values 1 to 36 
+    for (i = 0;i < 16;i++)     //assigning values 1 to 16 
         randvalues[i] = i + 1;
 
     for (i = 0;i < 16;i++)      //shuffle logic
@@ -477,32 +474,17 @@ void left_update_array(int array[][4], int* cordinate_1, int* cordinate_2, int* 
 }
 
 int check_sort(int array[][4]) {
-    // passing as variable for checking sorted or not
-    int a[16] = { 0 };
-    int i, j;
-    int temp = 0;
-    int temp_array[16];
-    for (int w = 0; w < 4; w++) {
-        for (int x = 0; x < 4; x++) {
-            temp_array[temp] = array[w][x];
-            temp++;
-        }
-    }
-    int z = 0;
-    for (i = 0; i < 16; i++) {
-        for (j = i; j < 16; j++) {
-            if (temp_array[i] > temp_array[j] && (i != j)) {
-                a[z] = 1;
-                z++;
+    int expected = 1;
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (i == 3 && j == 3) {
+                if (array[i][j] != 32) return 0;  // Last cell should be empty (space 32)
+            }
+            else {
+                if (array[i][j] != expected) return 0;
+                expected++;
             }
         }
     }
-    for (int i = 0; i < 16; i++) {
-        if (a[i] == 1) {
-            return 0;
-        }
-        else {
-            return 1;
-        }
-    }
+    return 1;
 }
